@@ -83,7 +83,7 @@ class _AboutViewState extends State<AboutView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Créditos de Ingeniería',
+                  'Créditos',
                   style: Theme.of(
                     context,
                   ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
@@ -94,7 +94,7 @@ class _AboutViewState extends State<AboutView> {
                     const Icon(Icons.code, size: 20),
                     const SizedBox(width: 8),
                     Text(
-                      'Desarrollador: Gabriel',
+                      'Desarrollador: Ing. Gabriel Gabaute',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ],
@@ -105,7 +105,7 @@ class _AboutViewState extends State<AboutView> {
                     const Icon(Icons.school_outlined, size: 20),
                     const SizedBox(width: 8),
                     Text(
-                      'Institución: UNEFA',
+                      'UNEFA Extensión Bejuma',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ],
