@@ -66,4 +66,48 @@ class ComplexMathService {
       return iIn.multiply(yK.divide(yEq));
     }).toList();
   }
+
+  /// Transforma una red Delta (Za, Zb, Zc) a su equivalente Estrella.
+  List<ComplexNumber> deltaToWye(
+    ComplexNumber zA,
+    ComplexNumber zB,
+    ComplexNumber zC,
+  ) {
+    ComplexNumber sum = zA.add(zB).add(zC);
+    if (sum.real == 0 && sum.imaginary == 0) {
+      return List.filled(3, const ComplexNumber(real: 0, imaginary: 0));
+    }
+
+    ComplexNumber z1 = zB.multiply(zC).divide(sum);
+    ComplexNumber z2 = zA.multiply(zC).divide(sum);
+    ComplexNumber z3 = zA.multiply(zB).divide(sum);
+
+    return [z1, z2, z3];
+  }
+
+  /// Transforma una red Estrella (Z1, Z2, Z3) a su equivalente Delta.
+  List<ComplexNumber> wyeToDelta(
+    ComplexNumber z1,
+    ComplexNumber z2,
+    ComplexNumber z3,
+  ) {
+    if (z1.real == 0 && z1.imaginary == 0 ||
+        z2.real == 0 && z2.imaginary == 0 ||
+        z3.real == 0 && z3.imaginary == 0) {
+      throw const DivideByZeroException(
+        "Indeterminación por elemento nulo en Estrella.",
+      );
+    }
+
+    ComplexNumber p1 = z1.multiply(z2);
+    ComplexNumber p2 = z2.multiply(z3);
+    ComplexNumber p3 = z3.multiply(z1);
+    ComplexNumber numeratorSum = p1.add(p2).add(p3);
+
+    ComplexNumber zA = numeratorSum.divide(z1);
+    ComplexNumber zB = numeratorSum.divide(z2);
+    ComplexNumber zC = numeratorSum.divide(z3);
+
+    return [zA, zB, zC];
+  }
 }
