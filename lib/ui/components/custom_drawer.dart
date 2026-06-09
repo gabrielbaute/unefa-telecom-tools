@@ -1,3 +1,4 @@
+import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import '../../router/app_router.dart';
 
@@ -8,7 +9,7 @@ class CustomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String? currentRoute = ModalRoute.of(context)?.settings.name;
+    final String currentRoute = GoRouterState.of(context).uri.toString();
 
     return NavigationDrawer(
       selectedIndex: _calculateSelectedIndex(currentRoute),
@@ -24,7 +25,7 @@ class CustomDrawer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Telecom Tools',
+                'Unefa Telecom Tools',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context).colorScheme.primary,
@@ -56,7 +57,7 @@ class CustomDrawer extends StatelessWidget {
           label: Text('Acerca de la App'),
         ),
 
-        /* A FUTURO: Aquí agregarás el destino para la configuración de temas
+        /* A FUTURO: Aquí irá el destino para la configuración de temas
         const NavigationDrawerDestination(
           icon: Icon(Icons.settings_outlined),
           selectedIcon: Icon(Icons.settings),
@@ -79,7 +80,7 @@ class CustomDrawer extends StatelessWidget {
     }
   }
 
-  /// Ejecuta las transiciones manteniendo la jerarquía limpia.
+  /// Ejecuta las transiciones utilizando la API declarativa de go_router.
   void _handleNavigation(
     BuildContext context,
     int index,
@@ -96,17 +97,10 @@ class CustomDrawer extends StatelessWidget {
         break;
     }
 
+    // Navegamos únicamente si el destino es diferente a la pantalla actual
     if (currentRoute != targetRoute) {
-      if (targetRoute == AppRouter.home) {
-        // Al volver al Home, limpiamos el historial para que sea la base de la pila
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          targetRoute,
-          (route) => false,
-        );
-      } else {
-        Navigator.pushNamed(context, targetRoute);
-      }
+      // go_router maneja la pila de manera óptima de forma nativa
+      context.go(targetRoute);
     }
   }
 }
