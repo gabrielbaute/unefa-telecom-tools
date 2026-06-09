@@ -8,6 +8,7 @@ import '../ui/views/complex_view.dart';
 import '../ui/views/divider_view.dart';
 import '../ui/views/parallel_view.dart';
 import '../ui/views/resistor_view.dart';
+import '../ui/views/star_delta_view.dart';
 
 /// Configuración centralizada del enrutamiento de la aplicación.
 ///
@@ -22,6 +23,7 @@ class AppRouter {
   static const String divider = '/divider';
   static const String parallel = '/parallel';
   static const String complexCalc = '/complex-calc';
+  static const String starDelta = '/star-delta';
 
   /// Instancia principal de GoRouter que maneja la navegación.
   static final GoRouter router = GoRouter(
@@ -73,6 +75,12 @@ class AppRouter {
         path: complexCalc,
         builder: (BuildContext context, GoRouterState state) {
           return const ComplexCalcView();
+        },
+      ),
+      GoRoute(
+        path: starDelta,
+        builder: (BuildContext context, GoRouterState state) {
+          return const StarDeltaView();
         },
       ),
     ],

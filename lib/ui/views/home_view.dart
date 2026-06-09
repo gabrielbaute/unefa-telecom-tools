@@ -61,6 +61,14 @@ class HomeView extends StatelessWidget {
           routePath: AppRouter.parallel,
         ),
 
+        // Módulo para conversion estrella-delta y delta-estrella
+        NavigationMenuCard(
+          title: 'Conversor Y-Δ/Δ-Y',
+          subtitle: 'Transformar entre configuraciones estrella y delta',
+          icon: Icons.change_circle,
+          routePath: AppRouter.starDelta,
+        ),
+
         // SECCIÓN DE MATEMÁTICAS
         Text(
           'Cálculos Matemáticos',
