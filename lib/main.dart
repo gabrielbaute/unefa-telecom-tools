@@ -7,6 +7,7 @@ import 'controllers/complex_calc_controller.dart';
 import 'controllers/divider_controller.dart';
 import 'controllers/parallel_controller.dart';
 import 'controllers/resistor_controller.dart';
+import 'controllers/star_delta_controller.dart';
 
 import 'router/app_router.dart';
 
@@ -21,6 +22,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => DividerController()),
         ChangeNotifierProvider(create: (_) => ParallelController()),
         ChangeNotifierProvider(create: (_) => ResistorController()),
+        ChangeNotifierProvider(create: (_) => StarDeltaController()),
       ],
       child: const MyApp(),
     ),
