@@ -4,6 +4,7 @@ import 'controllers/about_controller.dart';
 import 'controllers/capacitor_controller.dart';
 import 'controllers/complex_controller.dart';
 import 'controllers/complex_calc_controller.dart';
+import 'controllers/digital_controller.dart';
 import 'controllers/divider_controller.dart';
 import 'controllers/parallel_controller.dart';
 import 'controllers/resistor_controller.dart';
@@ -19,6 +20,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => CapacitorController()),
         ChangeNotifierProvider(create: (_) => ComplexController()),
         ChangeNotifierProvider(create: (_) => ComplexCalcController()),
+        ChangeNotifierProvider(create: (_) => DigitalController()),
         ChangeNotifierProvider(create: (_) => DividerController()),
         ChangeNotifierProvider(create: (_) => ParallelController()),
         ChangeNotifierProvider(create: (_) => ResistorController()),
