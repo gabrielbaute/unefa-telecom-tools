@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import '../mixins/cleanable_form.dart';
 import '../services/ceramic_capacitor_service.dart';
 
-class CapacitorController extends ChangeNotifier {
+class CapacitorController extends ChangeNotifier with CleanableForm {
   final CeramicCapacitorService _service = CeramicCapacitorService();
 
   String _code = "";
@@ -31,6 +32,14 @@ class CapacitorController extends ChangeNotifier {
       _result = null;
       _error = "Código inválido";
     }
+    notifyListeners();
+  }
+
+  @override
+  void clearForm() {
+    _code = "";
+    _result = null;
+    _error = null;
     notifyListeners();
   }
 }

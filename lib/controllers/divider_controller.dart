@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import '../models/complex_number.dart';
 import '../enums/circuit_enums.dart';
+import '../mixins/cleanable_form.dart';
 import '../services/complex_math_service.dart';
 import '../services/divider_calculator_service.dart';
 
-class DividerController extends ChangeNotifier {
+class DividerController extends ChangeNotifier with CleanableForm {
   final DividerCalculatorService _dcService = DividerCalculatorService();
   final ComplexMathService _acService = ComplexMathService();
 
@@ -136,5 +137,21 @@ class DividerController extends ChangeNotifier {
           '${z.real.toStringAsFixed(2)} $sign j${z.imaginary.abs().toStringAsFixed(2)} $unit\n'
           '(${z.magnitude.toStringAsFixed(2)} ∡ ${z.phaseDegrees.toStringAsFixed(1)}° $unit)';
     }
+  }
+
+  @override
+  void clearForm() {
+    _sourceValueReal = "12";
+    _sourceValueImag = "0";
+
+    // Al ser dinámico, preservamos los dos elementos mínimos iniciales
+    _realValues.clear();
+    _imagValues.clear();
+    _realValues.addAll(["100", "100"]);
+    _imagValues.addAll(["0", "0"]);
+
+    _formattedResults = {};
+    _error = null;
+    notifyListeners();
   }
 }

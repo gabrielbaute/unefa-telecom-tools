@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import '../models/complex_number.dart';
 import '../enums/math_enums.dart';
+import '../mixins/cleanable_form.dart';
 
-class ComplexCalcController extends ChangeNotifier {
+class ComplexCalcController extends ChangeNotifier with CleanableForm {
   ComplexNumMode _mode = ComplexNumMode.rectangular;
   ComplexOperation _operation = ComplexOperation.add;
 
@@ -97,5 +98,16 @@ class ComplexCalcController extends ChangeNotifier {
       }
       notifyListeners();
     }
+  }
+
+  @override
+  void clearForm() {
+    _z1RealOrMag = "0";
+    _z1ImagOrAng = "0";
+    _z2RealOrMag = "0";
+    _z2ImagOrAng = "0";
+    _formattedResults = {};
+    _error = null;
+    notifyListeners();
   }
 }

@@ -1,9 +1,10 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import '../services/complex_converter_service.dart';
 import '../enums/math_enums.dart';
+import '../mixins/cleanable_form.dart';
+import '../services/complex_converter_service.dart';
 
-class ComplexController extends ChangeNotifier {
+class ComplexController extends ChangeNotifier with CleanableForm {
   final ComplexConverterService _service = ComplexConverterService();
 
   ComplexNumMode _inputMode = ComplexNumMode.rectangular;
@@ -65,5 +66,14 @@ class ComplexController extends ChangeNotifier {
       _error = "Ingrese valores numéricos válidos";
       notifyListeners();
     }
+  }
+
+  @override
+  void clearForm() {
+    _val1 = "0";
+    _val2 = "0";
+    _result = null;
+    _error = null;
+    notifyListeners();
   }
 }

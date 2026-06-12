@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import '../models/complex_number.dart';
-import '../services/complex_math_service.dart';
 import '../enums/circuit_enums.dart';
+import '../models/complex_number.dart';
+import '../mixins/cleanable_form.dart';
+import '../services/complex_math_service.dart';
 
-class StarDeltaController extends ChangeNotifier {
+class StarDeltaController extends ChangeNotifier with CleanableForm {
   final ComplexMathService _mathService = ComplexMathService();
 
   ConversionDirection _direction = ConversionDirection.deltaToWye;
@@ -90,6 +91,7 @@ class StarDeltaController extends ChangeNotifier {
   }
 
   /// Restablece todas las entradas y mapas de resultados a su estado inicial.
+  @override
   void clearForm() {
     for (int i = 0; i < 3; i++) {
       _realInputs[i] = "100";
@@ -97,6 +99,6 @@ class StarDeltaController extends ChangeNotifier {
     }
     _formattedResults = {};
     _error = null;
-    notifyListeners(); // Notifica a la UI para vaciar los campos
+    notifyListeners();
   }
 }

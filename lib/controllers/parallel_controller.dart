@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import '../enums/circuit_enums.dart';
+import '../mixins/cleanable_form.dart';
 import '../models/complex_number.dart';
 import '../services/complex_math_service.dart';
 
-class ParallelController extends ChangeNotifier {
+class ParallelController extends ChangeNotifier with CleanableForm {
   final ComplexMathService _acService = ComplexMathService();
 
   CircuitDomain _domain = CircuitDomain.dc;
@@ -95,5 +96,17 @@ class ParallelController extends ChangeNotifier {
           '${zEq.real.toStringAsFixed(3)} $sign j${zEq.imaginary.abs().toStringAsFixed(3)} Ω\n'
           '(${zEq.magnitude.toStringAsFixed(3)} ∡ ${zEq.phaseDegrees.toStringAsFixed(1)}° Ω)',
     };
+  }
+
+  @override
+  void clearForm() {
+    _realValues.clear();
+    _imagValues.clear();
+    _realValues.addAll(["100", "100"]);
+    _imagValues.addAll(["0", "0"]);
+
+    _formattedResults = {};
+    _error = null;
+    notifyListeners();
   }
 }
