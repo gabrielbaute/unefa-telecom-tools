@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/parallel_controller.dart';
+import '../../enums/circuit_enums.dart';
 import '../components/custom_segmented_selector.dart';
 import '../components/math_text_field.dart';
 import '../components/result_display_card.dart';
@@ -53,23 +54,24 @@ class _ParallelViewState extends State<ParallelView> {
       }
     }
 
-    final bool isAc = controller.type == ParallelCircuitType.ac;
+    final bool isAc = controller.domain == CircuitDomain.ac;
 
     return BaseLayout(
       title: 'Equivalentes en Paralelo',
       children: <Widget>[
         // Selector de Dominio (DC / AC) utilizando tu componente abstracto
-        CustomSegmentedSelector<ParallelCircuitType>(
-          selectedValue: controller.type,
-          onSelectionChanged: (newType) => controller.setCircuitType(newType),
+        CustomSegmentedSelector<CircuitDomain>(
+          selectedValue: controller.domain,
+          onSelectionChanged: (newDomain) =>
+              controller.setCircuitDomain(newDomain),
           segments: const [
             SelectorSegmentData(
-              value: ParallelCircuitType.dc,
+              value: CircuitDomain.dc,
               label: 'Corriente Continua (DC)',
               icon: Icons.horizontal_rule,
             ),
             SelectorSegmentData(
-              value: ParallelCircuitType.ac,
+              value: CircuitDomain.ac,
               label: 'Corriente Alterna (AC)',
               icon: Icons.waves,
             ),

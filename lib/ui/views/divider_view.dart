@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../enums/circuit_enums.dart';
 import '../../controllers/divider_controller.dart';
 import '../components/math_text_field.dart';
 import '../components/result_display_card.dart';
@@ -66,14 +67,14 @@ class _DividerViewState extends State<DividerView> {
       }
     }
 
-    final bool isAc = controller.type == CircuitType.ac;
+    final bool isAc = controller.domain == CircuitDomain.ac;
 
     // Configuración de textos dinámicos según el modo y tipo de circuito
-    final String sourceLabelReal = controller.mode == DividerMode.voltage
+    final String sourceLabelReal = controller.mode == CircuitMagnitude.voltage
         ? (isAc ? 'Voltaje Real (V_re)' : 'Voltaje de Entrada (V_in)')
         : (isAc ? 'Corriente Real (I_re)' : 'Corriente de Entrada (I_in)');
 
-    final String sourceLabelImag = controller.mode == DividerMode.voltage
+    final String sourceLabelImag = controller.mode == CircuitMagnitude.voltage
         ? 'Voltaje Imag (j_Vim)'
         : 'Corriente Imag (j_Iim)';
 
@@ -81,17 +82,18 @@ class _DividerViewState extends State<DividerView> {
       title: 'Divisores Dinámicos',
       children: <Widget>[
         // Selector 1: Tipo de Señal (DC / AC)
-        CustomSegmentedSelector<CircuitType>(
-          selectedValue: controller.type,
-          onSelectionChanged: (newType) => controller.setCircuitType(newType),
+        CustomSegmentedSelector<CircuitDomain>(
+          selectedValue: controller.domain,
+          onSelectionChanged: (newDomain) =>
+              controller.setCircuitDomian(newDomain),
           segments: const [
             SelectorSegmentData(
-              value: CircuitType.dc,
+              value: CircuitDomain.dc,
               label: 'Corriente Continua (DC)',
               icon: Icons.horizontal_rule,
             ),
             SelectorSegmentData(
-              value: CircuitType.ac,
+              value: CircuitDomain.ac,
               label: 'Corriente Alterna (AC)',
               icon: Icons.waves,
             ),
@@ -99,17 +101,17 @@ class _DividerViewState extends State<DividerView> {
         ),
 
         // Selector 2: Tipo de Divisor (Voltaje / Corriente)
-        CustomSegmentedSelector<DividerMode>(
+        CustomSegmentedSelector<CircuitMagnitude>(
           selectedValue: controller.mode,
           onSelectionChanged: (newMode) => controller.setMode(newMode),
           segments: const [
             SelectorSegmentData(
-              value: DividerMode.voltage,
+              value: CircuitMagnitude.voltage,
               label: 'Divisor de Voltaje',
               icon: Icons.bolt,
             ),
             SelectorSegmentData(
-              value: DividerMode.current,
+              value: CircuitMagnitude.current,
               label: 'Divisor de Corriente',
               icon: Icons.sync_alt,
             ),
@@ -260,10 +262,10 @@ class _DividerViewState extends State<DividerView> {
             controller.error == null) ...[
           Text(
             isAc
-                ? (controller.mode == DividerMode.voltage
+                ? (controller.mode == CircuitMagnitude.voltage
                       ? 'Voltaje Complejo en cada Impedancia:'
                       : 'Corriente Compleja por cada Rama:')
-                : (controller.mode == DividerMode.voltage
+                : (controller.mode == CircuitMagnitude.voltage
                       ? 'Voltaje en cada Resistencia:'
                       : 'Corriente en cada Rama:'),
             style: Theme.of(

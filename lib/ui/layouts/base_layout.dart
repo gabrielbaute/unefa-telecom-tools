@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../router/app_router.dart';
 import '../components/custom_app_bar.dart';
 import '../components/custom_drawer.dart';
@@ -8,13 +9,15 @@ import '../components/custom_drawer.dart';
 class BaseLayout extends StatelessWidget {
   final String title;
   final List<Widget> children;
-  final bool showBackButton; // Parámetro propagado para la raíz
+  final bool showBackButton;
+  final List<Widget>? actions; // <-- Parámetro expuesto para las vistas
 
   const BaseLayout({
     super.key,
     required this.title,
     required this.children,
     this.showBackButton = true,
+    this.actions, // Recibe las acciones opcionales
   });
 
   @override
@@ -22,14 +25,17 @@ class BaseLayout extends StatelessWidget {
     const double paddingStandard = 24.0;
     const double spacingBetweenElements = 24.0;
 
-    // Determina si se muestra el Drawer solo en la pantalla principal (Tablero)
-    // Si no es la pantalla principal, se oculta el Drawer y se muestra el botón de retroceso
-    final String? currentRoute = ModalRoute.of(context)?.settings.name;
+    // Sincronización con GoRouter para evitar el comportamiento nulo de ModalRoute
+    final String currentRoute = GoRouterState.of(context).uri.toString();
     final bool isHome = currentRoute == AppRouter.home;
 
-    // Scaffold con AppBar personalizado, Drawer condicional y cuerpo con scroll y padding estándar
     return Scaffold(
-      appBar: CustomAppBar(title: title, showBackButton: showBackButton),
+      // PROPAGACIÓN: Enviamos las acciones recibidas de la vista al CustomAppBar
+      appBar: CustomAppBar(
+        title: title,
+        showBackButton: showBackButton,
+        actions: actions,
+      ),
       drawer: isHome ? const CustomDrawer() : null,
       body: SafeArea(
         child: SingleChildScrollView(

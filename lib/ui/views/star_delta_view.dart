@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/star_delta_controller.dart';
+import '../../enums/circuit_enums.dart';
+import '../components/clear_form_button.dart';
 import '../components/custom_segmented_selector.dart';
 import '../components/math_text_field.dart';
 import '../components/result_display_card.dart';
@@ -37,7 +39,7 @@ class _StarDeltaViewState extends State<StarDeltaView> {
   @override
   Widget build(BuildContext context) {
     final controller = context.watch<StarDeltaController>();
-    final bool isAc = controller.type == NetworkCircuitType.ac;
+    final bool isAc = controller.domain == CircuitDomain.ac;
     final bool isDeltaToWye =
         controller.direction == ConversionDirection.deltaToWye;
 
@@ -48,6 +50,21 @@ class _StarDeltaViewState extends State<StarDeltaView> {
 
     return BaseLayout(
       title: 'Conversión Estrella - Delta',
+      actions: [
+        ClearFormButton(
+          onClear: () {
+            // 1. Vaciamos las cajas de texto de la capa de presentación (UI)
+            for (var c in _realControllers) {
+              c.text = "100";
+            }
+            for (var c in _imagControllers) {
+              c.text = "0";
+            }
+            // 2. Ejecutamos el reseteo del estado lógico en el controlador
+            controller.clearForm();
+          },
+        ),
+      ],
       children: <Widget>[
         // Selector 1: Dirección del Algoritmo
         CustomSegmentedSelector<ConversionDirection>(
@@ -68,17 +85,18 @@ class _StarDeltaViewState extends State<StarDeltaView> {
         ),
 
         // Selector 2: Dominio de Frecuencia (DC / AC)
-        CustomSegmentedSelector<NetworkCircuitType>(
-          selectedValue: controller.type,
-          onSelectionChanged: (newType) => controller.setCircuitType(newType),
+        CustomSegmentedSelector<CircuitDomain>(
+          selectedValue: controller.domain,
+          onSelectionChanged: (newDomain) =>
+              controller.setCircuitDomian(newDomain),
           segments: const [
             SelectorSegmentData(
-              value: NetworkCircuitType.dc,
+              value: CircuitDomain.dc,
               label: 'Resistencias (DC)',
               icon: Icons.horizontal_rule,
             ),
             SelectorSegmentData(
-              value: NetworkCircuitType.ac,
+              value: CircuitDomain.ac,
               label: 'Impedancias (AC)',
               icon: Icons.waves,
             ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../enums/math_enums.dart';
 import '../../controllers/complex_calc_controller.dart';
 import '../components/custom_segmented_selector.dart';
 import '../components/math_text_field.dart';
@@ -31,7 +32,7 @@ class _ComplexCalcViewState extends State<ComplexCalcView> {
   @override
   Widget build(BuildContext context) {
     final controller = context.watch<ComplexCalcController>();
-    final bool isRect = controller.mode == ComplexCalcMode.rectangular;
+    final bool isRect = controller.mode == ComplexNumMode.rectangular;
 
     final String label1 = isRect ? 'Real (x)' : 'Magnitud (r)';
     final String label2 = isRect ? 'Imaginario (j_y)' : 'Ángulo (θ°)';
@@ -40,7 +41,7 @@ class _ComplexCalcViewState extends State<ComplexCalcView> {
       title: 'Aritmética Compleja',
       children: <Widget>[
         // Selector de Formato de Entrada genérico
-        CustomSegmentedSelector<ComplexCalcMode>(
+        CustomSegmentedSelector<ComplexNumMode>(
           selectedValue: controller.mode,
           onSelectionChanged: (newMode) {
             _z1C1.clear();
@@ -51,12 +52,12 @@ class _ComplexCalcViewState extends State<ComplexCalcView> {
           },
           segments: const [
             SelectorSegmentData(
-              value: ComplexCalcMode.rectangular,
+              value: ComplexNumMode.rectangular,
               label: 'Coordenadas Rectangulares',
               icon: Icons.grid_on,
             ),
             SelectorSegmentData(
-              value: ComplexCalcMode.polar,
+              value: ComplexNumMode.polar,
               label: 'Forma Fasorial / Polar',
               icon: Icons.explore,
             ),

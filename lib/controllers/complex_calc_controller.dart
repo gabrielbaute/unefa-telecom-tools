@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import '../models/complex_number.dart';
-
-enum ComplexCalcMode { rectangular, polar }
-
-enum ComplexOperation { add, subtract, multiply, divide }
+import '../enums/math_enums.dart';
 
 class ComplexCalcController extends ChangeNotifier {
-  ComplexCalcMode _mode = ComplexCalcMode.rectangular;
+  ComplexNumMode _mode = ComplexNumMode.rectangular;
   ComplexOperation _operation = ComplexOperation.add;
 
   // Entradas para Z1
@@ -20,12 +17,12 @@ class ComplexCalcController extends ChangeNotifier {
   Map<String, String> _formattedResults = {};
   String? _error;
 
-  ComplexCalcMode get mode => _mode;
+  ComplexNumMode get mode => _mode;
   ComplexOperation get operation => _operation;
   Map<String, String> get formattedResults => _formattedResults;
   String? get error => _error;
 
-  void setMode(ComplexCalcMode newMode) {
+  void setMode(ComplexNumMode newMode) {
     _mode = newMode;
     calculate();
   }
@@ -57,11 +54,11 @@ class ComplexCalcController extends ChangeNotifier {
       double i2 = double.parse(_z2ImagOrAng.isEmpty ? "0" : _z2ImagOrAng);
 
       // Instanciar los objetos según el modo de entrada seleccionado
-      ComplexNumber z1 = _mode == ComplexCalcMode.rectangular
+      ComplexNumber z1 = _mode == ComplexNumMode.rectangular
           ? ComplexNumber(real: r1, imaginary: i1)
           : ComplexNumber.fromPolar(r1, i1);
 
-      ComplexNumber z2 = _mode == ComplexCalcMode.rectangular
+      ComplexNumber z2 = _mode == ComplexNumMode.rectangular
           ? ComplexNumber(real: r2, imaginary: i2)
           : ComplexNumber.fromPolar(r2, i2);
 

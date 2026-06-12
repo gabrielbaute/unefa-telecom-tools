@@ -1,21 +1,15 @@
 import 'package:flutter/material.dart';
 import '../models/complex_number.dart';
+import '../enums/circuit_enums.dart';
 import '../services/complex_math_service.dart';
 import '../services/divider_calculator_service.dart';
-
-enum DividerMode { voltage, current }
-
-enum CircuitType {
-  dc,
-  ac,
-} // Nuevo: Conmutador entre corriente continua y alterna
 
 class DividerController extends ChangeNotifier {
   final DividerCalculatorService _dcService = DividerCalculatorService();
   final ComplexMathService _acService = ComplexMathService();
 
-  DividerMode _mode = DividerMode.voltage;
-  CircuitType _type = CircuitType.dc; // Por defecto iniciamos en DC
+  CircuitMagnitude _magnitude = CircuitMagnitude.voltage;
+  CircuitDomain _domain = CircuitDomain.dc; // Por defecto iniciamos en DC
 
   String _sourceValueReal = "12";
   String _sourceValueImag = "0"; // Para la fuente en AC
@@ -28,8 +22,8 @@ class DividerController extends ChangeNotifier {
   Map<String, String> _formattedResults = {};
   String? _error;
 
-  DividerMode get mode => _mode;
-  CircuitType get type => _type;
+  CircuitMagnitude get mode => _magnitude;
+  CircuitDomain get domain => _domain;
   List<String> get realValues => _realValues;
   List<String> get imagValues => _imagValues;
   Map<String, String> get formattedResults => _formattedResults;
@@ -37,13 +31,14 @@ class DividerController extends ChangeNotifier {
   String get sourceValueReal => _sourceValueReal;
   String get sourceValueImag => _sourceValueImag;
 
-  void setMode(DividerMode newMode) {
-    _mode = newMode;
+  /// Determina la magnitud con la que se va a trabajar: corriente o voltaje
+  void setMode(CircuitMagnitude newMagnitude) {
+    _magnitude = newMagnitude;
     calculate();
   }
 
-  void setCircuitType(CircuitType newType) {
-    _type = newType;
+  void setCircuitDomian(CircuitDomain newDomain) {
+    _domain = newDomain;
     calculate();
   }
 
@@ -83,7 +78,7 @@ class DividerController extends ChangeNotifier {
         _sourceValueImag.isEmpty ? "0" : _sourceValueImag,
       );
 
-      if (_type == CircuitType.dc) {
+      if (_domain == CircuitDomain.dc) {
         _executeDcCalculation(sReal);
       } else {
         _executeAcCalculation(sReal, sImag);
@@ -103,11 +98,11 @@ class DividerController extends ChangeNotifier {
         .toList();
     if (rList.any((r) => r < 0)) throw const FormatException();
 
-    List<double> rawResults = _mode == DividerMode.voltage
+    List<double> rawResults = _magnitude == CircuitMagnitude.voltage
         ? _dcService.calculateVoltageDivider(source, rList)
         : _dcService.calculateCurrentDivider(source, rList);
 
-    String unit = _mode == DividerMode.voltage ? 'V' : 'A';
+    String unit = _magnitude == CircuitMagnitude.voltage ? 'V' : 'A';
     _formattedResults = {};
     for (int i = 0; i < rawResults.length; i++) {
       _formattedResults['Elemento R${i + 1}:'] =
@@ -126,11 +121,11 @@ class DividerController extends ChangeNotifier {
       zList.add(ComplexNumber(real: r, imaginary: x));
     }
 
-    List<ComplexNumber> rawResults = _mode == DividerMode.voltage
+    List<ComplexNumber> rawResults = _magnitude == CircuitMagnitude.voltage
         ? _acService.calculateVoltageDivider(vIn, zList)
         : _acService.calculateCurrentDivider(vIn, zList);
 
-    String unit = _mode == DividerMode.voltage ? 'V' : 'A';
+    String unit = _magnitude == CircuitMagnitude.voltage ? 'V' : 'A';
     _formattedResults = {};
     for (int i = 0; i < rawResults.length; i++) {
       ComplexNumber z = rawResults[i];

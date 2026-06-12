@@ -1,13 +1,12 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import '../services/complex_converter_service.dart';
-
-enum ComplexInputMode { rectangular, fasorial }
+import '../enums/math_enums.dart';
 
 class ComplexController extends ChangeNotifier {
   final ComplexConverterService _service = ComplexConverterService();
 
-  ComplexInputMode _inputMode = ComplexInputMode.rectangular;
+  ComplexNumMode _inputMode = ComplexNumMode.rectangular;
 
   // Variables de entrada
   String _val1 = "0"; // Representa Real o Magnitud
@@ -16,11 +15,11 @@ class ComplexController extends ChangeNotifier {
   Map<String, dynamic>? _result;
   String? _error;
 
-  ComplexInputMode get inputMode => _inputMode;
+  ComplexNumMode get inputMode => _inputMode;
   Map<String, dynamic>? get result => _result;
   String? get error => _error;
 
-  void setInputMode(ComplexInputMode mode) {
+  void setInputMode(ComplexNumMode mode) {
     _inputMode = mode;
     _val1 = "0";
     _val2 = "0";
@@ -41,7 +40,7 @@ class ComplexController extends ChangeNotifier {
       double p2 = double.parse(_val2);
       _error = null;
 
-      if (_inputMode == ComplexInputMode.rectangular) {
+      if (_inputMode == ComplexNumMode.rectangular) {
         final polars = _service.fromRectangular(p1, p2);
         _result = {
           'real': p1,

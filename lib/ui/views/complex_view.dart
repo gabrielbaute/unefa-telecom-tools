@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../enums/math_enums.dart';
 import '../../controllers/complex_controller.dart';
 import '../components/math_text_field.dart';
 import '../components/result_display_card.dart';
@@ -30,11 +31,11 @@ class _ComplexViewState extends State<ComplexView> {
     final controller = context.watch<ComplexController>();
 
     // Definición de las etiquetas de los inputs según el modo activo del controlador
-    final String label1 = controller.inputMode == ComplexInputMode.rectangular
+    final String label1 = controller.inputMode == ComplexNumMode.rectangular
         ? 'Parte Real (x)'
         : 'Magnitud (r)';
 
-    final String label2 = controller.inputMode == ComplexInputMode.rectangular
+    final String label2 = controller.inputMode == ComplexNumMode.rectangular
         ? 'Parte Imaginaria (j_y)'
         : 'Ángulo (θ°)';
 
@@ -42,7 +43,7 @@ class _ComplexViewState extends State<ComplexView> {
       title: 'Conversor de Fasores',
       children: <Widget>[
         // Selector de Modo de Entrada forma rectangular vs fasorial/polar
-        CustomSegmentedSelector<ComplexInputMode>(
+        CustomSegmentedSelector<ComplexNumMode>(
           selectedValue: controller.inputMode,
           onSelectionChanged: (newMode) {
             _c1.clear();
@@ -51,12 +52,12 @@ class _ComplexViewState extends State<ComplexView> {
           },
           segments: const [
             SelectorSegmentData(
-              value: ComplexInputMode.rectangular,
+              value: ComplexNumMode.rectangular,
               label: 'Rectangular',
               icon: Icons.grid_on,
             ),
             SelectorSegmentData(
-              value: ComplexInputMode.fasorial,
+              value: ComplexNumMode.polar,
               label: 'Fasorial / Polar',
               icon: Icons.explore,
             ),

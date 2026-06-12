@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import '../enums/circuit_enums.dart';
 import '../models/complex_number.dart';
 import '../services/complex_math_service.dart';
-
-enum ParallelCircuitType { dc, ac }
 
 class ParallelController extends ChangeNotifier {
   final ComplexMathService _acService = ComplexMathService();
 
-  ParallelCircuitType _type = ParallelCircuitType.dc;
+  CircuitDomain _domain = CircuitDomain.dc;
 
   // Listas dinámicas para capturar los valores de las ramas
   final List<String> _realValues = ["100", "100"];
@@ -16,14 +15,14 @@ class ParallelController extends ChangeNotifier {
   Map<String, String> _formattedResults = {};
   String? _error;
 
-  ParallelCircuitType get type => _type;
+  CircuitDomain get domain => _domain;
   List<String> get realValues => _realValues;
   List<String> get imagValues => _imagValues;
   Map<String, String> get formattedResults => _formattedResults;
   String? get error => _error;
 
-  void setCircuitType(ParallelCircuitType newType) {
-    _type = newType;
+  void setCircuitDomain(CircuitDomain newDomain) {
+    _domain = newDomain;
     calculate();
   }
 
@@ -51,7 +50,7 @@ class ParallelController extends ChangeNotifier {
     try {
       _error = null;
 
-      if (_type == ParallelCircuitType.dc) {
+      if (_domain == CircuitDomain.dc) {
         _executeDcParallel();
       } else {
         _executeAcParallel();
