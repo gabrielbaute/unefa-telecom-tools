@@ -5,6 +5,8 @@ import '../ui/views/about_view.dart';
 import '../ui/views/capacitor_view.dart';
 import '../ui/views/complex_calc_view.dart';
 import '../ui/views/complex_view.dart';
+import '../ui/views/digital_calculator_view.dart';
+import '../ui/views/digital_converter_view.dart';
 import '../ui/views/divider_view.dart';
 import '../ui/views/parallel_view.dart';
 import '../ui/views/resistor_view.dart';
@@ -24,6 +26,8 @@ class AppRouter {
   static const String parallel = '/parallel';
   static const String complexCalc = '/complex-calc';
   static const String starDelta = '/star-delta';
+  static const String digitalConverter = '/digital-converter';
+  static const String digitalCalculator = '/digital-calculator';
 
   /// Instancia principal de GoRouter que maneja la navegación.
   static final GoRouter router = GoRouter(
@@ -81,6 +85,18 @@ class AppRouter {
         path: starDelta,
         builder: (BuildContext context, GoRouterState state) {
           return const StarDeltaView();
+        },
+      ),
+      GoRoute(
+        path: digitalConverter,
+        builder: (BuildContext context, GoRouterState state) {
+          return const DigitalConverterView();
+        },
+      ),
+      GoRoute(
+        path: digitalCalculator,
+        builder: (BuildContext context, GoRouterState state) {
+          return const DigitalCalculatorView();
         },
       ),
     ],
