@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../enums/math_enums.dart';
 import '../../controllers/complex_calc_controller.dart';
+import '../components/arithmetic_operator_selector.dart';
 import '../components/clear_form_button.dart';
 import '../components/custom_segmented_selector.dart';
 import '../components/math_text_field.dart';
@@ -158,14 +159,31 @@ class _ComplexCalcViewState extends State<ComplexCalcView> {
           ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
         ),
 
-        // Botonera horizontal compacta de operadores simbólicos
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            _buildOpButton(context, ComplexOperation.add, '+', controller),
-            _buildOpButton(context, ComplexOperation.subtract, '-', controller),
-            _buildOpButton(context, ComplexOperation.multiply, '×', controller),
-            _buildOpButton(context, ComplexOperation.divide, '÷', controller),
+        // Selector de operaciones
+        ArithmeticOperatorSelector<ComplexOperation>(
+          selectedValue: controller.operation,
+          onSelectionChanged: (newOp) => controller.setOperation(newOp),
+          operators: const [
+            OperatorSegmentData(
+              value: ComplexOperation.add,
+              symbol: '+',
+              tooltip: 'Suma Compleja',
+            ),
+            OperatorSegmentData(
+              value: ComplexOperation.subtract,
+              symbol: '-',
+              tooltip: 'Resta Compleja',
+            ),
+            OperatorSegmentData(
+              value: ComplexOperation.multiply,
+              symbol: '×',
+              tooltip: 'Multiplicación Compleja',
+            ),
+            OperatorSegmentData(
+              value: ComplexOperation.divide,
+              symbol: '÷',
+              tooltip: 'División Compleja',
+            ),
           ],
         ),
 
@@ -192,33 +210,5 @@ class _ComplexCalcViewState extends State<ComplexCalcView> {
         ],
       ],
     );
-  }
-
-  /// Constructor auxiliar de botones de operación con cambio de estado visual.
-  Widget _buildOpButton(
-    BuildContext context,
-    ComplexOperation op,
-    String symbol,
-    ComplexCalcController controller,
-  ) {
-    final bool isSelected = controller.operation == op;
-
-    return isSelected
-        ? FilledButton(
-            style: FilledButton.styleFrom(minimumSize: const Size(60, 50)),
-            onPressed: () => controller.setOperation(op),
-            child: Text(
-              symbol,
-              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-            ),
-          )
-        : OutlinedButton(
-            style: OutlinedButton.styleFrom(minimumSize: const Size(60, 50)),
-            onPressed: () => controller.setOperation(op),
-            child: Text(
-              symbol,
-              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-            ),
-          );
   }
 }
