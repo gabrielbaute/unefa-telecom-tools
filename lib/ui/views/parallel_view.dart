@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/parallel_controller.dart';
 import '../../enums/circuit_enums.dart';
+import '../components/clear_form_button.dart';
 import '../components/custom_segmented_selector.dart';
 import '../components/math_text_field.dart';
 import '../components/result_display_card.dart';
@@ -58,6 +59,20 @@ class _ParallelViewState extends State<ParallelView> {
 
     return BaseLayout(
       title: 'Equivalentes en Paralelo',
+      actions: [
+        ClearFormButton(
+          onClear: () {
+            // 1. Limpiar y desechar controladores de las ramas en paralelo
+            for (var c in _branchControllers) {
+              c.dispose();
+            }
+            _branchControllers.clear();
+
+            // 2. Ejecutar limpieza del estado lógico
+            controller.clearForm();
+          },
+        ),
+      ],
       children: <Widget>[
         // Selector de Dominio (DC / AC) utilizando tu componente abstracto
         CustomSegmentedSelector<CircuitDomain>(

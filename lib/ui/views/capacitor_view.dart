@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/capacitor_controller.dart';
 import '../layouts/base_layout.dart';
+import '../components/clear_form_button.dart';
 import '../components/custom_text_field.dart';
 import '../components/result_display_card.dart';
 
@@ -16,6 +17,13 @@ class CapacitorView extends StatelessWidget {
     // Centralizamos la estructura usando el nuevo BaseLayout
     return BaseLayout(
       title: 'Condensadores Cerámicos',
+      actions: [
+        ClearFormButton(
+          onClear: () {
+            controller.clearForm();
+          },
+        ),
+      ],
       children: <Widget>[
         // Encabezado estático visual
         const _CapacitorHeaderCard(),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../enums/math_enums.dart';
 import '../../controllers/complex_controller.dart';
+import '../components/clear_form_button.dart';
 import '../components/math_text_field.dart';
 import '../components/result_display_card.dart';
 import '../components/custom_segmented_selector.dart';
@@ -41,6 +42,15 @@ class _ComplexViewState extends State<ComplexView> {
 
     return BaseLayout(
       title: 'Conversor de Fasores',
+      actions: [
+        ClearFormButton(
+          onClear: () {
+            _c1.clear();
+            _c2.clear();
+            controller.clearForm();
+          },
+        ),
+      ],
       children: <Widget>[
         // Selector de Modo de Entrada forma rectangular vs fasorial/polar
         CustomSegmentedSelector<ComplexNumMode>(

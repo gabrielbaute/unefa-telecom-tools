@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../enums/circuit_enums.dart';
 import '../../controllers/divider_controller.dart';
+import '../components/clear_form_button.dart';
 import '../components/math_text_field.dart';
 import '../components/result_display_card.dart';
 import '../components/custom_segmented_selector.dart';
@@ -80,6 +81,24 @@ class _DividerViewState extends State<DividerView> {
 
     return BaseLayout(
       title: 'Divisores Dinámicos',
+      actions: [
+        ClearFormButton(
+          onClear: () {
+            // 1. Restablecer controladores de la fuente de excitación
+            _sourceRealController.text = "12";
+            _sourceImagController.text = "0";
+
+            // 2. Limpiar y desechar controladores dinámicos de la red
+            for (var c in _networkControllers) {
+              c.dispose();
+            }
+            _networkControllers.clear();
+
+            // 3. Ejecutar limpieza del estado lógico
+            controller.clearForm();
+          },
+        ),
+      ],
       children: <Widget>[
         // Selector 1: Tipo de Señal (DC / AC)
         CustomSegmentedSelector<CircuitDomain>(

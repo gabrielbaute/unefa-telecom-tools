@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../enums/math_enums.dart';
 import '../../controllers/complex_calc_controller.dart';
+import '../components/clear_form_button.dart';
 import '../components/custom_segmented_selector.dart';
 import '../components/math_text_field.dart';
 import '../components/result_display_card.dart';
@@ -39,6 +40,17 @@ class _ComplexCalcViewState extends State<ComplexCalcView> {
 
     return BaseLayout(
       title: 'Aritmética Compleja',
+      actions: [
+        ClearFormButton(
+          onClear: () {
+            _z1C1.clear();
+            _z1C2.clear();
+            _z2C1.clear();
+            _z2C2.clear();
+            controller.clearForm();
+          },
+        ),
+      ],
       children: <Widget>[
         // Selector de Formato de Entrada genérico
         CustomSegmentedSelector<ComplexNumMode>(
