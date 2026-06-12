@@ -81,6 +81,27 @@ class HomeView extends StatelessWidget {
           icon: Icons.calculate,
           routePath: AppRouter.complexCalc,
         ),
+
+        // SECCIÓN DE SISTEMAS DIGITALES
+        Text(
+          'Sistemas Digitales',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        // Módulo de Aritmética Digital abstracto
+        NavigationMenuCard(
+          title: 'Calculadora de Aritmética Digital',
+          subtitle: 'Operaciones aritméticasen base 2, 8, 10 y 16',
+          icon: Icons.calculate,
+          routePath: AppRouter.digitalCalculator,
+        ),
+        // Módulo de Conversor de Bases abstracto
+        NavigationMenuCard(
+          title: 'Conversor de Bases Numéricas',
+          subtitle:
+              'Convertir entre base binaria, octal, decimal y hexadecimal',
+          icon: Icons.calculate,
+          routePath: AppRouter.digitalConverter,
+        ),
       ],
     );
   }
