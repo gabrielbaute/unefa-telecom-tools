@@ -14,7 +14,7 @@ class SelectorSegmentData<T> {
 }
 
 /// Un selector segmentado estandarizado y genérico para la aplicación,
-/// que reduce la verbosidad de SegmentedButton de Material 3.
+/// optimizado con escalamiento dinámico para prevenir el apiñamiento visual.
 class CustomSegmentedSelector<T> extends StatelessWidget {
   final T selectedValue;
   final List<SelectorSegmentData<T>> segments;
@@ -30,12 +30,46 @@ class CustomSegmentedSelector<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SegmentedButton<T>(
-      // Convertimos nuestra estructura limpia al formato nativo exigido por Flutter
+      // Reducimos los paddings internos por defecto del botón para ganar valiosos píxeles en los extremos
+      style: const ButtonStyle(
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        visualDensity: VisualDensity.compact,
+      ),
+      // Convertimos nuestra estructura limpia al formato nativo optimizado
       segments: segments.map((seg) {
         return ButtonSegment<T>(
           value: seg.value,
-          label: Text(seg.label),
-          icon: Icon(seg.icon),
+          // Encapsulamos el layout en un espacio vertical compacto
+          label: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(
+                  seg.icon,
+                  size: 18.0,
+                ), // Tamaño de ícono de ingeniería optimizado
+                const SizedBox(height: 2.0),
+                // FittedBox actúa como un amortiguador elástico reduciendo la fuente si el espacio colapsa
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    seg.label,
+                    style: const TextStyle(
+                      fontSize: 11.0, // Fuente base compacta legible
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // Deshabilitamos el ícono nativo del segmento para evitar que el framework
+          // intente inyectar su propio Row horizontal de manera forzada
+          icon: const SizedBox.shrink(),
         );
       }).toList(),
       // El componente nativo exige un Set, lo extraemos del tipo simple recibido
