@@ -9,6 +9,7 @@ import 'controllers/divider_controller.dart';
 import 'controllers/parallel_controller.dart';
 import 'controllers/resistor_controller.dart';
 import 'controllers/star_delta_controller.dart';
+import 'controllers/trigonometry_controller.dart';
 
 import 'router/app_router.dart';
 
@@ -25,6 +26,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => ParallelController()),
         ChangeNotifierProvider(create: (_) => ResistorController()),
         ChangeNotifierProvider(create: (_) => StarDeltaController()),
+        ChangeNotifierProvider(create: (_) => TrigonometryController()),
       ],
       child: const MyApp(),
     ),
