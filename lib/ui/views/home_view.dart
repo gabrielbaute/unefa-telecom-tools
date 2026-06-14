@@ -81,6 +81,20 @@ class HomeView extends StatelessWidget {
           icon: Icons.calculate,
           routePath: AppRouter.complexCalc,
         ),
+        // Módulo de Trigonometría Aplicada abstracto
+        NavigationMenuCard(
+          title: 'Calculadora de Trigonometría Aplicada',
+          subtitle: 'Cálculo de funciones trigonométricas',
+          icon: Icons.signal_cellular_0_bar,
+          routePath: AppRouter.trigonometryDirect,
+        ),
+        // Módulo de Trigonometría Inversa abstracto
+        NavigationMenuCard(
+          title: 'Calculadora de Trigonometría Inversa',
+          subtitle: 'Cálculo de funciones inversas trigonométricas',
+          icon: Icons.signal_cellular_0_bar,
+          routePath: AppRouter.trigonometryInverse,
+        ),
 
         // SECCIÓN DE SISTEMAS DIGITALES
         Text(
