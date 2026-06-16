@@ -23,6 +23,12 @@ class TrigonometryController extends ChangeNotifier with CleanableForm {
   Map<String, String> _inverseResults = {};
   String? _inverseError;
 
+  // --- Estado: Funciones Hiperbólicas (Nuevos Canales) ---
+  String _hyperbolicScalarInput = "0";
+  Map<String, String> _hyperbolicDirectResults = {};
+  Map<String, String> _hyperbolicInverseResults = {};
+  String? _hyperbolicError;
+
   // --- Getters Públicos ---
   AngleUnit get directUnit => _directUnit;
   Map<String, String> get directResults => _directResults;
@@ -32,8 +38,12 @@ class TrigonometryController extends ChangeNotifier with CleanableForm {
   Map<String, String> get inverseResults => _inverseResults;
   String? get inverseError => _inverseError;
 
-  // --- Pipeline: Funciones Directas ---
+  String get hyperbolicScalarInput => _hyperbolicScalarInput;
+  Map<String, String> get hyperbolicDirectResults => _hyperbolicDirectResults;
+  Map<String, String> get hyperbolicInverseResults => _hyperbolicInverseResults;
+  String? get hyperbolicError => _hyperbolicError;
 
+  // --- Pipeline: Funciones Directas ---
   void setDirectUnit(AngleUnit newUnit) {
     _directUnit = newUnit;
     calculateDirect();
@@ -76,20 +86,12 @@ class TrigonometryController extends ChangeNotifier with CleanableForm {
 
       final double rad = _service.convertToRadians(parsedValue, _directUnit);
       final Map<String, double> directRaw = _service.calculateDirect(rad);
-      final Map<String, double> hyperbolicRaw = _service.calculateHyperbolic(
-        parsedValue,
-      );
 
       _directResults = {};
       directRaw.forEach((key, val) {
         _directResults[key] = val.isNaN
             ? 'Indeterminado (Asíntota)'
             : val.toStringAsFixed(5);
-      });
-
-      _directResults['--- Funciones Hiperbólicas ---'] = '';
-      hyperbolicRaw.forEach((key, val) {
-        _directResults[key] = val.toStringAsFixed(5);
       });
 
       notifyListeners();
@@ -101,7 +103,6 @@ class TrigonometryController extends ChangeNotifier with CleanableForm {
   }
 
   // --- Pipeline: Funciones Inversas (Arco) ---
-
   void setInverseOutputUnit(AngleUnit newUnit) {
     _inverseOutputUnit = newUnit;
     calculateInverse();
@@ -126,19 +127,16 @@ class TrigonometryController extends ChangeNotifier with CleanableForm {
         if (val.isNaN) {
           _inverseResults[key] = 'Fuera de dominio [-1, 1]';
         } else {
-          // Convertimos el ángulo de salida de radianes a grados decimales nativos
           final double convertedDegrees = _service.convertFromRadians(
             val,
             AngleUnit.decimalDegrees,
           );
 
-          // Evaluación declarativa de la unidad de presentación seleccionada
           if (_inverseOutputUnit == AngleUnit.sexagesimal) {
             _inverseResults[key] = _service.formatToSexagesimal(
               convertedDegrees,
             );
           } else if (_inverseOutputUnit == AngleUnit.radians) {
-            // Re-calculamos a radianes para mantener la máxima precisión escalar
             final double convertedRadians = _service.convertFromRadians(
               val,
               AngleUnit.radians,
@@ -158,6 +156,47 @@ class TrigonometryController extends ChangeNotifier with CleanableForm {
     }
   }
 
+  // --- Pipeline: Funciones Hiperbólicas Modernizadas ---
+  void updateHyperbolicInput(String value) {
+    _hyperbolicScalarInput = value;
+    calculateHyperbolic();
+  }
+
+  void calculateHyperbolic() {
+    try {
+      _hyperbolicError = null;
+      final double x = double.parse(
+        _hyperbolicScalarInput.isEmpty ? "0" : _hyperbolicScalarInput,
+      );
+
+      // Despacho simultáneo de los dos bloques analíticos hacia el servicio corregido
+      final Map<String, double> directRaw = _service.calculateHyperbolic(x);
+      final Map<String, double> inverseRaw = _service
+          .calculateInverseHyperbolic(x);
+
+      _hyperbolicDirectResults = {};
+      directRaw.forEach((key, val) {
+        _hyperbolicDirectResults[key] = val.isNaN
+            ? 'Indeterminado'
+            : val.toStringAsFixed(5);
+      });
+
+      _hyperbolicInverseResults = {};
+      inverseRaw.forEach((key, val) {
+        _hyperbolicInverseResults[key] = val.isNaN
+            ? 'Fuera de dominio real'
+            : val.toStringAsFixed(5);
+      });
+
+      notifyListeners();
+    } catch (e) {
+      _hyperbolicDirectResults = {};
+      _hyperbolicInverseResults = {};
+      _hyperbolicError = "Sintaxis numérica errónea.";
+      notifyListeners();
+    }
+  }
+
   @override
   void clearForm() {
     _directMainInput = "0";
@@ -170,6 +209,12 @@ class TrigonometryController extends ChangeNotifier with CleanableForm {
     _inverseScalarInput = "0";
     _inverseResults = {};
     _inverseError = null;
+
+    _hyperbolicScalarInput = "0";
+    _hyperbolicDirectResults = {};
+    _hyperbolicInverseResults = {};
+    _hyperbolicError = null;
+
     notifyListeners();
   }
 }
