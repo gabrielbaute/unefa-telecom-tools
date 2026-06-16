@@ -191,7 +191,7 @@ class _TrigonometryDirectViewState extends State<TrigonometryDirectView> {
             controller.directError == null) ...[
           const Divider(),
           Text(
-            'Coeficientes de Relación Directa e Hiperbólica:',
+            'Coeficientes de Relación Directa:',
             style: Theme.of(
               context,
             ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),

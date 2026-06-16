@@ -12,6 +12,7 @@ import '../ui/views/parallel_view.dart';
 import '../ui/views/resistor_view.dart';
 import '../ui/views/star_delta_view.dart';
 import '../ui/views/trigonometry_direct_view.dart';
+import '../ui/views/trigonometry_hyperbolic_view.dart';
 import '../ui/views/trigonometry_inverse_view.dart';
 
 /// Configuración centralizada del enrutamiento de la aplicación.
@@ -31,6 +32,7 @@ class AppRouter {
   static const String digitalConverter = '/digital-converter';
   static const String digitalCalculator = '/digital-calculator';
   static const String trigonometryDirect = '/trigonometry-direct';
+  static const String trigonometryHyperbolic = '/trigonometry-hyperbolic';
   static const String trigonometryInverse = '/trigonometry-inverse';
 
   /// Instancia principal de GoRouter que maneja la navegación.
@@ -113,6 +115,12 @@ class AppRouter {
         path: trigonometryInverse,
         builder: (BuildContext context, GoRouterState state) {
           return const TrigonometryInverseView();
+        },
+      ),
+      GoRoute(
+        path: trigonometryHyperbolic,
+        builder: (BuildContext context, GoRouterState state) {
+          return const TrigonometryHyperbolicView();
         },
       ),
     ],

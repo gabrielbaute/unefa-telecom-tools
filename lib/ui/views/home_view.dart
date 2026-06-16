@@ -95,6 +95,13 @@ class HomeView extends StatelessWidget {
           icon: Icons.signal_cellular_0_bar,
           routePath: AppRouter.trigonometryInverse,
         ),
+        // Módulo de Trigonometría Hiperbólica abstracto
+        NavigationMenuCard(
+          title: 'Calculadora de Trigonometría Hiperbólica',
+          subtitle: 'Cálculo de funciones hiperbólicas',
+          icon: Icons.change_circle_sharp,
+          routePath: AppRouter.trigonometryHyperbolic,
+        ),
 
         // SECCIÓN DE SISTEMAS DIGITALES
         Text(
