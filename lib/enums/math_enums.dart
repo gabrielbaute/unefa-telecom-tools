@@ -12,3 +12,6 @@ enum ComplexNumMode { rectangular, polar }
 ///      radians: Radianes (ej. π/4)
 ///
 enum AngleUnit { decimalDegrees, sexagesimal, radians }
+
+/// Enum local para segmentar la visualización de las funciones hiperbólicas que se trabajarán
+enum HyperbolicViewMode { direct, inverse }
