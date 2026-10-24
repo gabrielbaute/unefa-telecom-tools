@@ -81,6 +81,14 @@ class HomeView extends StatelessWidget {
           icon: Icons.calculate,
           routePath: AppRouter.complexCalc,
         ),
+        // Módulo de Raíces Complejas (Teorema de De Moivre)
+        NavigationMenuCard(
+          title: 'Raíces de Números Complejos',
+          subtitle:
+              'Calcular las raíces n-ésimas de un número complejo usando De Moivre',
+          icon: Icons.bubble_chart,
+          routePath: AppRouter.complexRoot,
+        ),
         // Módulo de Trigonometría Aplicada abstracto
         NavigationMenuCard(
           title: 'Calculadora de Trigonometría Aplicada',
