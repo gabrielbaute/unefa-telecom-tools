@@ -1,0 +1,46 @@
+name: Flutter Quality & Security Analysis
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  analyze_flutter:
+    name: Flutter & Dart Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Setup Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Show Flutter & Dart versions
+        run: |
+          flutter --version || true
+          dart --version || true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Check Formatting
+        run: dart format --set-exit-if-changed .
+
+      - name: Static Analysis
+        run: flutter analyze
+
+      - name: Install & Run Security Audit
+        run: |
+          dart pub global activate flutter_auditor
+          dart pub global run flutter_auditor audit
