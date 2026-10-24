@@ -11,7 +11,7 @@ class ComplexRootService {
   ///   [n] (int): El orden de la raíz (debe ser mayor o igual a 1).
   ///
   /// Returns:
-  ///   (List<ComplexNumber>): Una lista con las n raíces complejas calculadas.
+  ///   (List&lt;ComplexNumber&gt;): Una lista con las n raíces complejas calculadas.
   ///
   /// Raises:
   ///   [ArgumentError]: Si el orden de la raíz [n] es menor a 1.
