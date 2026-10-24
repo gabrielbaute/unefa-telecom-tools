@@ -9,7 +9,7 @@ class CeramicCapacitorService {
   ///   [code] (String): El código alfanumérico del condensador.
   ///
   /// Returns:
-  ///   (Map<String, dynamic>): Un mapa con el 'farads' (double), 'picofarads' (double) y 'tolerance' (String).
+  ///   (Map&lt;String, dynamic&gt;): Un mapa con el 'farads' (double), 'picofarads' (double) y 'tolerance' (String).
   ///
   /// Raises:
   ///   [FormatException]: Si el formato del código no cumple con la nomenclatura estándar.

@@ -8,10 +8,10 @@ class ResistorCalculatorService {
   /// Soporta configuraciones de 4 y 5 bandas.
   ///
   /// Args:
-  ///   [bands] (List<ResistorColor>): Lista ordenada de las bandas de la resistencia.
+  ///   [bands] (List&lt;ResistorColor&gt;): Lista ordenada de las bandas de la resistencia.
   ///
   /// Returns:
-  ///   (Map<String, dynamic>): Un mapa con el 'value' (double en Ohmios) y 'tolerance' (double).
+  ///   (Map&lt;String, dynamic&gt;): Un mapa con el 'value' (double en Ohmios) y 'tolerance' (double).
   ///
   /// Raises:
   ///   [ArgumentError]: Si la cantidad de bandas no es 4 o 5, o si los colores no son válidos en su posición.
