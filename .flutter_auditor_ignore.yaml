@@ -1,0 +1,2 @@
+ids:
+  - android_exported_components_activity_.MainActivity   # Falso positivo: launcher obligatorio en Android 12+
