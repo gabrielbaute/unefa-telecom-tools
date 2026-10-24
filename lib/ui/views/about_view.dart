@@ -15,7 +15,10 @@ class _AboutViewState extends State<AboutView> {
   void initState() {
     super.initState();
     // Disparamos la lectura nativa tan pronto como se renderice la vista
-    Future.microtask(() => context.read<AboutController>().loadPackageInfo());
+    Future.microtask(() {
+      if (!mounted) return;
+      context.read<AboutController>().loadPackageInfo();
+    });
   }
 
   @override
