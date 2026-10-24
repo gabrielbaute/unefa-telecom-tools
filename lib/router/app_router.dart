@@ -4,6 +4,7 @@ import '../ui/views/home_view.dart';
 import '../ui/views/about_view.dart';
 import '../ui/views/capacitor_view.dart';
 import '../ui/views/complex_calc_view.dart';
+import '../ui/views/complex_root_view.dart';
 import '../ui/views/complex_view.dart';
 import '../ui/views/digital_calculator_view.dart';
 import '../ui/views/digital_converter_view.dart';
@@ -28,6 +29,7 @@ class AppRouter {
   static const String divider = '/divider';
   static const String parallel = '/parallel';
   static const String complexCalc = '/complex-calc';
+  static const String complexRoot = '/complex-root';
   static const String starDelta = '/star-delta';
   static const String digitalConverter = '/digital-converter';
   static const String digitalCalculator = '/digital-calculator';
@@ -67,6 +69,12 @@ class AppRouter {
         path: complex,
         builder: (BuildContext context, GoRouterState state) {
           return const ComplexView();
+        },
+      ),
+      GoRoute(
+        path: complexRoot,
+        builder: (BuildContext context, GoRouterState state) {
+          return const ComplexRootView();
         },
       ),
       GoRoute(
