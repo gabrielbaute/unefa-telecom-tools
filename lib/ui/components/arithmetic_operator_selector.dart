@@ -15,7 +15,7 @@ class OperatorSegmentData<T> {
 
 /// Selector modular en hilera para operaciones aritméticas.
 ///
-/// Utiliza genéricos <T> para adaptarse a cualquier estructura de enums de operación,
+/// Utiliza genéricos &lt;T&gt; para adaptarse a cualquier estructura de enums de operación,
 /// alternando dinámicamente entre estados activos (Filled) e inactivos (Outlined)
 /// bajo los lineamientos estéticos de Material 3.
 class ArithmeticOperatorSelector<T> extends StatelessWidget {

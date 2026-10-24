@@ -77,8 +77,10 @@ class DigitalNumber {
       DigitalNumber(value * other.value);
 
   DigitalNumber divide(DigitalNumber other) {
-    if (other.value == 0)
+    if (other.value == 0) {
       throw UnsupportedError('División por cero en aritmética digital.');
+    }
+
     return DigitalNumber(
       value ~/ other.value,
     ); // División entera (Bits de magnitud)

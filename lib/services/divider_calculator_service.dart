@@ -5,10 +5,10 @@ class DividerCalculatorService {
   ///
   /// Args:
   ///   [vIn] (double): Voltaje de entrada de la fuente.
-  ///   [resistances] (List<double>): Lista con los valores en Ohmios de cada resistencia.
+  ///   [resistances] (List&lt;double&gt;): Lista con los valores en Ohmios de cada resistencia.
   ///
   /// Returns:
-  ///   (List<double>): Lista con las caídas de voltaje correspondientes a cada resistencia.
+  ///   (List&lt;ouble&gt;): Lista con las caídas de voltaje correspondientes a cada resistencia.
   List<double> calculateVoltageDivider(double vIn, List<double> resistances) {
     if (resistances.isEmpty) return [];
 
@@ -24,10 +24,10 @@ class DividerCalculatorService {
   ///
   /// Args:
   ///   [iIn] (double): Corriente total de entrada al nodo.
-  ///   [resistances] (List<double>): Lista con los valores en Ohmios de cada rama.
+  ///   [resistances] (List&lt;double&gt;): Lista con los valores en Ohmios de cada rama.
   ///
   /// Returns:
-  ///   (List<double>): Lista con la corriente que circula por cada resistencia.
+  ///   (List&lt;double&gt;): Lista con la corriente que circula por cada resistencia.
   List<double> calculateCurrentDivider(double iIn, List<double> resistances) {
     if (resistances.isEmpty) return [];
 

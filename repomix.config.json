@@ -22,7 +22,7 @@
     "useGitignore": true,
     "useDefaultPatterns": true,
     "customPatterns": [
-      "andriod/**",
+      "android/**",
       "pubspec.lock",
       "ios/**",
       "web/**",
