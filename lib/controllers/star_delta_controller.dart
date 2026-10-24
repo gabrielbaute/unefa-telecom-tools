@@ -50,8 +50,9 @@ class StarDeltaController extends ChangeNotifier with CleanableForm {
       for (int i = 0; i < 3; i++) {
         double r = double.parse(_realInputs[i].isEmpty ? "0" : _realInputs[i]);
         double x = double.parse(_imagInputs[i].isEmpty ? "0" : _imagInputs[i]);
-        if (_domain == CircuitDomain.dc && r <= 0)
+        if (_domain == CircuitDomain.dc && r <= 0) {
           throw const FormatException();
+        }
         inputs.add(ComplexNumber(real: r, imaginary: x));
       }
 
