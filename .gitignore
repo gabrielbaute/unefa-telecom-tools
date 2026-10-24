@@ -50,3 +50,9 @@ app.*.map.json
 
 # Repomix
 repomix-output.xml
+
+# IDE's
+.vscode/
+
+# compilado
+./release
